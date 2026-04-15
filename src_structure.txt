@@ -1,0 +1,59 @@
+src_structure
+
+main.py
+- parse the arguments
+- get paths to source and destination files
+- open and read source file into string
+- send source string to data handling function
+	- returns a formatted MD string
+- write the MD string to the output file
+
+data_parse.py
+- take the string and break it up into lines
+- break up lines into individual values
+- call prelim_clean
+- switch case the QC types
+	- LFB: call lfb_lfm_controls returning LCL and UCL
+	- DUP: call dup_controls returning UCL
+	- LFM: call lfb_lfm_controls returning LCL and UCL
+	- BL: call mdl_b returning MDLb value
+	- MDL: call mdl_s returning MDLs value
+- build a MD string with qc variables stored above
+- return the string to main
+
+functions.py
+- prelim_clean([line][field])
+	- get rid of empty lines
+	- get rid of lines with invalid qc tags
+	- remove empty elements
+	- NOTE: list is passed by reference, no need to copy or return a new list.
+- lfb_lfm_controls([line][field], qc type)
+	- set critical index based on qc type
+	- iterate through lines and check for critical field
+	- if critical field exists, add it to a list cast as float
+	- from that list calculate mean and std deviation
+	- return tuple (mean - 3*stddev , mean + 3*stddev)
+- dup_controls([line][field])
+	- iterate through lines
+		- if field is there and sample concentration is >= LOQ:
+			- add to list cast as float
+	- from list calculate mean and stddev
+	- return mean + 3*stddev
+- mdl_b
+	- iterate through lines and check for critical field
+	- if it's there add it to a list
+	- if list contains 100 or more items:
+		- call mdl_b_99(sorted_list) and mdl_b_stud_t(list)
+		- return the lesser of the two values
+	- if list contains < 100 items call mdl_b_stud_t(list) and return result
+- mdl_s
+	- iterate through lines and check for critical field
+	- if it's there add it to a list
+	- find student's t-value for df = n-1
+	- return stddev*stud_t
+- mdl_b_99
+	- based on n, find 99th percentile index.
+	- return value at that index
+- mdl_b_stud_t
+	- find student's t value for df = n-1
+	- return mean*stud_t
