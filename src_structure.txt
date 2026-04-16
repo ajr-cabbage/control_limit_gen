@@ -12,7 +12,7 @@ data_parse.py
 - take the string and break it up into lines
 - break up lines into individual values
 - call prelim_clean
-- switch case the QC types
+- switch case the QC types (enum)
 	- LFB: call lfb_lfm_controls returning LCL and UCL
 	- DUP: call dup_controls returning UCL
 	- LFM: call lfb_lfm_controls returning LCL and UCL
@@ -22,10 +22,8 @@ data_parse.py
 - return the string to main
 
 functions.py
-- prelim_clean([line][field])
+- prelim_clean(lines)
 	- get rid of empty lines
-	- get rid of lines with invalid qc tags
-	- remove empty elements
 	- NOTE: list is passed by reference, no need to copy or return a new list.
 - lfb_lfm_controls([line][field], qc type)
 	- set critical index based on qc type

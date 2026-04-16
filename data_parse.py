@@ -1,12 +1,11 @@
-from functions import dup_control, lfb_lfm_controls, mdl_b, mdl_s, prelim_clean
+from functions import dup_control, lfb_lfm_controls, mdl_b, mdl_s
 from qctype import QCType
 
 
 # accepts a csv string and returns a formatted string with calculated control limits
 def data_parse(csv, md_template):
-    # split into lines and remove empty lines
+    # split into lines
     csv_lines = csv.split("\n")
-    prelim_clean(csv_lines)
     # initialize lists to be passed to calc functions
     lrb_lines = []
     lfb_lines = []
@@ -16,7 +15,7 @@ def data_parse(csv, md_template):
     # look at each line, determine the valid QC type and add it to the correct list
     for csv_line in csv_lines:
         csv_line = csv_line.split(",")
-        if csv_line[0] in QCType:
+        if csv_line[0] and csv_line[0] in QCType:
             match csv_line[0]:
                 case QCType.LRB:
                     lrb_lines.append(csv_line)
@@ -32,8 +31,8 @@ def data_parse(csv, md_template):
                     raise ValueError("Invalid QCType")
     # send lists to calc functions and store values
     mdl_b_value = mdl_b(lrb_lines)
-    lfb_lcl, lfb_ucl = lfb_lfm_controls(lfb_lines)
-    lfm_lcl, lfm_ucl = lfb_lfm_controls(lfm_lines)
+    lfb_lcl, lfb_ucl = lfb_lfm_controls(lfb_lines, QCType.LFB)
+    lfm_lcl, lfm_ucl = lfb_lfm_controls(lfm_lines, QCType.LFM)
     dup_rpd = dup_control(dup_lines)
     mdl_s_value = mdl_s(mdl_lines)
     # sub in values to AMrkdown template and return

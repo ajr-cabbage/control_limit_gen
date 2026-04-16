@@ -1,2 +1,8 @@
 src_structure.txt
 test_*
+.venv
+.python-version
+README.md
+__pycache__/
+pyproject.toml
+uv.lock
