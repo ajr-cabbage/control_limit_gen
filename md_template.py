@@ -1,3 +1,6 @@
+method = "Total Phosphorus"
+loq = 0.01
+
 md_template = """
 ### QC Data - {METHOD}
 
