@@ -1,8 +1,7 @@
 src_structure.txt
-test_*
+test*
 .venv
 .python-version
-README.md
 __pycache__/
 pyproject.toml
 uv.lock

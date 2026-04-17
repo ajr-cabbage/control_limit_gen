@@ -1,7 +1,7 @@
 import statistics
 from cmath import inf
 
-from scipy.stats import t
+from scipy import *
 
 from md_template import loq
 from qctype import QCType
@@ -82,7 +82,7 @@ def dup_control(array):
     index = 1
     qc_values = []
     for item in array:
-        if item[index] and is_number(item[index]) and item[index + 1] >= loq:
+        if item[index] and is_number(item[index]) and float(item[index + 1]) >= loq:
             qc_values.append(float(item[index]))
     mean = statistics.mean(qc_values)
     st_dev = statistics.stdev(qc_values)
