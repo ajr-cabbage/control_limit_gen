@@ -12,10 +12,13 @@
 #### Future Features
 
 
-- Accept some inputs via prompt:
+- Accept some inputs via UI/Template:
     - Method ID
     - LOQ
     - Input Filename
     - Output Filename
-- MDLs & MDLb calculation
 - Interactive outlier flagging and omission
+- Comprehensive reporting
+    - Include dataset
+    - Flag omissions with user provided comments
+    - Output format of choice
