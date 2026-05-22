@@ -3,7 +3,7 @@ from qctype import QCType
 
 
 # accepts a csv string and returns a formatted string with calculated control limits
-def data_parse(csv, md_template):
+def data_parse(csv: str, md_template: str) -> str:
     # split into lines
     csv_lines = csv.split("\n")
     # initialize lists to be passed to calc functions

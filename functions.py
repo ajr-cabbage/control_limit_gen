@@ -8,7 +8,7 @@ from qctype import QCType
 
 
 # test if string is numeric
-def is_number(n):
+def is_number(n: str) -> bool:
     try:
         float(n)
         return True
@@ -17,12 +17,12 @@ def is_number(n):
 
 
 # return the blank value at the 99th percentile
-def mdl_b_99(lst):
+def mdl_b_99(lst: list[float]) -> float:
     return statistics.quantiles(lst, n=100)[98]
 
 
 # return MDLb using students t value
-def mdl_b_stud_t(lst):
+def mdl_b_stud_t(lst: list[float]) -> float:
     df = len(lst) - 1
     t_value = stats.t.ppf(0.99, df)
     std_dev = statistics.stdev(lst)
@@ -30,7 +30,7 @@ def mdl_b_stud_t(lst):
 
 
 # return the lesser of two MDLb calculations
-def mdl_b(array):
+def mdl_b(array: list[list[str]]) -> float:
     index = 1
     qc_values = []
     for item in array:
@@ -47,7 +47,7 @@ def mdl_b(array):
 
 
 # return MDLs
-def mdl_s(array):
+def mdl_s(array: list[list[str]]) -> float:
     index = 1
     qc_values = []
     for item in array:
@@ -60,7 +60,7 @@ def mdl_s(array):
 
 
 # return LCL, UCL for either LFB or LFM QCType
-def lfb_lfm_controls(array, qc_type):
+def lfb_lfm_controls(array: list[list[str]], qc_type: QCType) -> float:
     index = 0
     qc_values = []
     if qc_type == QCType.LFB:
@@ -78,7 +78,7 @@ def lfb_lfm_controls(array, qc_type):
 
 
 # return DUP RPD limit
-def dup_control(array):
+def dup_control(array: list[list[str]]) -> float:
     index = 1
     qc_values = []
     for item in array:
